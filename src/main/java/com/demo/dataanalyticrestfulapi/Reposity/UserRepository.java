@@ -1,5 +1,6 @@
 package com.demo.dataanalyticrestfulapi.Reposity;
 
+import com.demo.dataanalyticrestfulapi.Reposity.provider.UserProvider;
 import com.demo.dataanalyticrestfulapi.model.Account;
 import com.demo.dataanalyticrestfulapi.model.User;
 import com.demo.dataanalyticrestfulapi.model.UserAccount;
@@ -13,9 +14,11 @@ import java.util.List;
 @Repository
 
 public interface UserRepository {
+
+
     @Result(column = "id", property = "userId")
-    @Select(("select * from users_tb"))
-    List<User> allUsers();
+    @SelectProvider(type = UserProvider.class , method = "getAllUsers")
+    List<User> allUsers(String filterName);
 
     @Results({
             @Result(column = "id", property = "userId"),

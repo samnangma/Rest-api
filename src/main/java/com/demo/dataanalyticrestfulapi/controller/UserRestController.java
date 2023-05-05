@@ -4,9 +4,10 @@ import com.demo.dataanalyticrestfulapi.Reposity.UserRepository;
 import com.demo.dataanalyticrestfulapi.model.User;
 import com.demo.dataanalyticrestfulapi.model.UserAccount;
 import com.demo.dataanalyticrestfulapi.model.request.UserRequest;
-import com.demo.dataanalyticrestfulapi.model.response.AccountResponse;
+    import com.demo.dataanalyticrestfulapi.model.response.AccountResponse;
 import com.demo.dataanalyticrestfulapi.service.UserService;
 import com.demo.dataanalyticrestfulapi.utils.Response;
+import com.github.pagehelper.PageInfo;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +31,13 @@ public class UserRestController {
     }
 
     @GetMapping("/allusers")
-    public Response<List<User>> getAllUser(){
+    public Response<PageInfo<User>> getAllUser(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size
+            , @RequestParam (defaultValue =  "", required = false) String username){
         try {
-            List<User> response = userService.allUsers();
-            return Response.<List<User>>ok().setPayload(response).setMessage("Successfully retrieved all users ! ");
+            PageInfo<User> response = userService.allUsers(page, size, username);
+            return Response.<PageInfo<User>>ok().setPayload(response).setMessage("Successfully retrieved all users ! ");
         } catch (Exception ex){
-            return Response.<List<User>>exception().setMessage("Failed to retrived the users! Exception occured ! ");
+            return Response.<PageInfo<User>>exception().setMessage("Failed to retrived the users! Exception occured ! ");
         }
 
     }
