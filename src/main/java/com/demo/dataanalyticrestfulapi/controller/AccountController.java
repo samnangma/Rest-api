@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/v1/account")
 public class AccountController {
     // inject Account Service
 

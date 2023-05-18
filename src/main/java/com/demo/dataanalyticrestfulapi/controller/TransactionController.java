@@ -1,6 +1,5 @@
 package com.demo.dataanalyticrestfulapi.controller;
 
-
 import com.demo.dataanalyticrestfulapi.service.TransactionService;
 import com.github.pagehelper.PageInfo;
 import com.demo.dataanalyticrestfulapi.model.Transaction;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/transaction")
+@RequestMapping("/api/v1/transaction")
 public class TransactionController {
     private final TransactionService transactionService;
     @GetMapping("/getAllTransaction")

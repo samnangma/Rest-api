@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 
-@RestController
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
@@ -29,4 +31,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 Response.<Object>BAD_REQUEST().setMessage(errors).setSuccess(false)
                 , HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    protected ResponseEntity<Object> handleMaxFileExceeded(MaxUploadSizeExceededException ex) {
+
+        return new ResponseEntity<>(
+                Response.<Object>BAD_REQUEST().setMessage(ex.getMessage()).setSuccess(false)
+                , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+
+        return new ResponseEntity<>(
+                Response.<Object>BAD_REQUEST().setMessage(ex.getMessage()).setSuccess(false)
+                , HttpStatus.BAD_REQUEST);
+    }
 }
+
+
