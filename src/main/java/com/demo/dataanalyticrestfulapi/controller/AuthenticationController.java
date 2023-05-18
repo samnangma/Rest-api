@@ -17,7 +17,7 @@ public class AuthenticationController {
         return null;
     }
 
-    @PatchMapping("/restPassword")
+    @PatchMapping("/resetPassword")
     public Response<?> resetPassword(){
         return null;
     }
