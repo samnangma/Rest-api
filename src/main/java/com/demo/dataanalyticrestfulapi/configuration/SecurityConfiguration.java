@@ -35,18 +35,18 @@ public class SecurityConfiguration {
 
 //    1. user credentials
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        // create three users
-        // user
-        UserDetails user1 = User.builder().username("Samnang").roles("USER").password("12345").build();
-        // admin
-        UserDetails user2 = User.builder().username("Dara").roles("USER").password("12345").build();
-        // admin
-        UserDetails user3 = User.builder().username("Nara").roles("USER").password("12345").build();
-
-        return new InMemoryUserDetailsManager(user1,user2,user3);
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsManager(){
+//        // create three users
+//        // user
+//        UserDetails user1 = User.builder().username("Samnang").roles("USER").password("12345").build();
+//        // admin
+//        UserDetails user2 = User.builder().username("Dara").roles("USER").password("12345").build();
+//        // admin
+//        UserDetails user3 = User.builder().username("Nara").roles("USER").password("12345").build();
+//
+//        return new InMemoryUserDetailsManager(user1,user2,user3);
+//    }
 //    2. password encoder
 //    BCrypt
     @Bean public PasswordEncoder passwordEncoder(){

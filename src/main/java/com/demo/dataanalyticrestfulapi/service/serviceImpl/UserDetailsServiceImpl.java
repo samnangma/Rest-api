@@ -2,24 +2,26 @@ package com.demo.dataanalyticrestfulapi.service.serviceImpl;
 
 import com.demo.dataanalyticrestfulapi.Reposity.UserRepository;
 import com.demo.dataanalyticrestfulapi.model.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
     UserRepository userRepository;
-
+    UserDetailsServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println(" loadUserByUsername is working jsutr fine  ");
+        System.out.println("Username is : "+username);
         User authenticatedUser = userRepository.findUserByUsername(username).stream().findFirst().orElse(null);
 
         System.out.println("Here is the authenticatedUser: " + authenticatedUser);

@@ -40,9 +40,8 @@ public interface UserRepository {
             "    WHERE user_id = #{id};")
     List<Account> findAccountsByUserId(int id);
 
-    @Select("select 8 from users_tb where username like ${username}")
-    @Result(property = "password",column = "secret_key")
-
+    @Select("select * from users_tb where username like #{username}")
+    @Result(property = "userId",column = "id")
     List<User> findUserByUsername(String username);
 
     @Insert("insert into users_tb(username, gender, address) \n" +
