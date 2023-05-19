@@ -6,7 +6,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -47,13 +49,15 @@ public class SecurityConfiguration {
     }
 //    2. password encoder
 //    BCrypt
-
-//    No Ops
-    @SuppressWarnings("deprecation")
-    @Bean
-    public NoOpPasswordEncoder passwordEncoder(){
-        return (NoOpPasswordEncoder)  NoOpPasswordEncoder.getInstance();
+    @Bean public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
+//    No Ops
+
+//    @Bean
+//    public NoOpPasswordEncoder passwordEncoder(){
+//        return (NoOpPasswordEncoder)  NoOpPasswordEncoder.getInstance();
+//    }
 //    3. security filter-chain
 
 

@@ -14,4 +14,7 @@ public class User {
     private String username;
     private String gender;
     private String address;
+//  new additional field
+    private String email;
+    private String password;
 }
