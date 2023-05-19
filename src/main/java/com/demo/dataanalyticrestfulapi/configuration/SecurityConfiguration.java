@@ -2,10 +2,18 @@ package com.demo.dataanalyticrestfulapi.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +24,28 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+    // 1 . Create bean of authentication manager
 
-    // Create three type of beans
+    private final UserDetailsService userDetailsService;
+    public SecurityConfiguration(UserDetailsService userDetailsService){
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration
+                                                       authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+
+                return daoAuthenticationProvider;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
@@ -34,7 +62,6 @@ public class SecurityConfiguration {
     // postgres, testing ( H2 database . also in memory database)
 
 //    1. user credentials
-
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsManager(){
 //        // create three users
@@ -49,15 +76,14 @@ public class SecurityConfiguration {
 //    }
 //    2. password encoder
 //    BCrypt
+
     @Bean public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-//    No Ops
 
-//    @Bean
-//    public NoOpPasswordEncoder passwordEncoder(){
-//        return (NoOpPasswordEncoder)  NoOpPasswordEncoder.getInstance();
-//    }
+
+
+
 //    3. security filter-chain
 
 
